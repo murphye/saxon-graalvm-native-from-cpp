@@ -2,6 +2,11 @@
 
 The purpose of this repository is to show a proof of concept on how to use the Saxon XSLT engine from C++, without using the Saxon C distribution. This is possible through GraalVM Native Image which allows the creation of a shared library (.so) containing a nativly compiled version of your Java function.
 
+## Getting Started
+
+While you can [install GraalVM Native Image](https://www.graalvm.org/reference-manual/native-image/) locally, it's actuially easier to run the native image compilation in Docker. 
+
+
 
 ## Credits
 
