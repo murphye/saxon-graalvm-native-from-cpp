@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+
+# Java Build
+target/
+.settings
+.classpath
+.project
+.vscode
+
