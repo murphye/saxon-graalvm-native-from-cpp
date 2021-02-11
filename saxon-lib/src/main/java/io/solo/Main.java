@@ -37,7 +37,6 @@ class Main {
         }
     }
 
-
     private static String transform(String xml, String xslt) throws SaxonApiException {
         Processor processor = new Processor(false);
         XsltCompiler compiler = processor.newXsltCompiler();
