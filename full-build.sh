@@ -8,15 +8,17 @@ cd saxon-lib
 
 cd ..
 
-sleep 2
+# Remove Existing Outputs (if they exist)
+
+rm transform-app/graal_isolate*
+rm transform-app/libsaxon-native*
+rm transform-app/transform
 
 # Copy Native Image Outputs
 
+rm ./saxon-lib/target/libsaxon-native-image-source-jar/libsaxon-native.jar
 cp ./saxon-lib/target/libsaxon-native-image-source-jar/graal_isolate* transform-app
-
-sleep 1
-
-cp ./saxon-lib/target/libsaxon-native-image-source-jar/{libsaxon-native.h,libsaxon-native.so,libsaxon-native_dynamic.h} transform-app
+cp ./saxon-lib/target/libsaxon-native-image-source-jar/libsaxon-native* transform-app
 
 cd transform-app
 
@@ -24,6 +26,8 @@ cd transform-app
 g++ transform.cc -L . -I . -lsaxon-native -o transform
 
 # Run Example
+
+echo "\n\nRunning the `transform` application"
 ./transform
 
 cd ..

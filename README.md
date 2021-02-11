@@ -4,8 +4,7 @@ The purpose of this repository is to show a proof of concept on how to use the S
 
 ## Getting Started
 
-While you can [install GraalVM Native Image](https://www.graalvm.org/reference-manual/native-image/) locally, it's actuially easier to run the native image compilation in Docker.
-
+Examine and run the`full_build.sh` that will build the Saxon native library, build the C++ executable application, and run it.
 
 
 ### Typical Result (XML to JSON)
