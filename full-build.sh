@@ -28,6 +28,7 @@ g++ transform.cc -L . -I . -lsaxon-native -o transform
 # Run Example
 
 echo "\n\nRunning the `transform` application"
+export LD_LIBRARY_PATH="$(pwd)"
 ./transform
 
 cd ..
