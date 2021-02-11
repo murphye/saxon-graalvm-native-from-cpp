@@ -15,7 +15,7 @@
     <quarkus-plugin.version>1.11.1.Final</quarkus-plugin.version>
     <surefire-plugin.version>2.22.1</surefire-plugin.version>
     <quarkus.package.type>native</quarkus.package.type>
-    <quarkus.native.additional-build-args>--shared, -H:ResourceConfigurationFiles=resources-config.json, -H:ReflectionConfigurationFiles=reflection-config.json, -H:IncludeResourceBundles=com.sun.org.apache.xerces.internal.impl.msg.XMLMessages, --allow-incomplete-classpath</quarkus.native.additional-build-args>
+    <quarkus.native.additional-build-args>--shared, -H:Name=libsaxon, -H:ResourceConfigurationFiles=resources-config.json, -H:ReflectionConfigurationFiles=reflection-config.json, -H:IncludeResourceBundles=com.sun.org.apache.xerces.internal.impl.msg.XMLMessages, --allow-incomplete-classpath</quarkus.native.additional-build-args>
   </properties>
 
   <dependencyManagement>
@@ -48,7 +48,7 @@
   </dependencies>
 
   <build>
-    <finalName>saxon</finalName>
+    <finalName>libsaxon</finalName>
     <plugins>
     <plugin>
       <groupId>io.quarkus</groupId>

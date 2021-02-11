@@ -8,6 +8,14 @@ While you can [install GraalVM Native Image](https://www.graalvm.org/reference-m
 
 
 
+### Typical Result (XML to JSON)
+```
+./transform
+Result> [{"Item_Number":"20001","Item_Description":"Item Description 1"},{"Item_Number":"20002","Item_Description":"Item Description 2"},{"Item_Number":"20003","Item_Description":"Item Description 3"}]
+2892
+```
+
+
 ## Credits
 
 1. [Code in Java, Execute as C++](https://towardsdatascience.com/code-in-java-execute-as-c-921f5db45f20)
