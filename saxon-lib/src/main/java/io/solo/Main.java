@@ -2,8 +2,6 @@ package io.solo;
 
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.util.Map;
-
 import javax.xml.transform.stream.StreamSource;
 
 import com.example.tutorial.AddressBookProtos.AddressBook;
@@ -27,7 +25,20 @@ class Main {
 
     public static void main(String... args) {}
 
-    @CEntryPoint(name = "transform")
+    @CEntryPoint(name = "transformSimple")
+    public static CCharPointer transform(IsolateThread thread, CCharPointer xml, CCharPointer xslt) {
+        try {
+            String result = transform(CTypeConversion.toJavaString(xml), CTypeConversion.toJavaString(xslt));
+            final CTypeConversion.CCharPointerHolder holder=CTypeConversion.toCString(result);
+            return holder.get();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return CTypeConversion.toCString(e.getMessage()).get();
+        }
+    }
+
+    @CEntryPoint(name = "transformComplex")
     public static CCharPointer transform(IsolateThread thread, CCharPointer xml, CCharPointer xslt, CCharPointer objStr) {
         try {
             String objStrObj = CTypeConversion.toJavaString(objStr);
