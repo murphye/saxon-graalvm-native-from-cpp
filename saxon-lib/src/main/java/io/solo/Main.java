@@ -2,7 +2,12 @@ package io.solo;
 
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.Map;
+
 import javax.xml.transform.stream.StreamSource;
+
+import com.example.tutorial.AddressBookProtos.AddressBook;
+import com.google.protobuf.ByteString;
 
 import org.graalvm.nativeimage.IsolateThread;
 import org.graalvm.nativeimage.c.function.CEntryPoint;
@@ -20,13 +25,17 @@ import net.sf.saxon.s9api.XsltExecutable;
 @QuarkusMain
 class Main {
 
-    public static void main(String... args) throws SaxonApiException {
-        System.out.println(transform(args[0], args[1]));
-    }
+    public static void main(String... args) {}
 
     @CEntryPoint(name = "transform")
-    public static CCharPointer transform(IsolateThread thread, CCharPointer xml, CCharPointer xslt) {
+    public static CCharPointer transform(IsolateThread thread, CCharPointer xml, CCharPointer xslt, CCharPointer objStr) {
         try {
+            String objStrObj = CTypeConversion.toJavaString(objStr);
+            ByteString bs = ByteString.copyFromUtf8(objStrObj);
+            AddressBook addressBook = AddressBook.parseFrom(bs);
+
+            System.out.println(">>> " + addressBook.getPeople(0).getName());
+
             String result = transform(CTypeConversion.toJavaString(xml), CTypeConversion.toJavaString(xslt));
             final CTypeConversion.CCharPointerHolder holder=CTypeConversion.toCString(result);
             return holder.get();
