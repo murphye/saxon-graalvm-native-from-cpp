@@ -2,6 +2,7 @@ package io.solo;
 
 import java.io.StringReader;
 import java.io.StringWriter;
+
 import javax.xml.transform.stream.StreamSource;
 
 import com.example.tutorial.AddressBookProtos.AddressBook;
@@ -28,7 +29,7 @@ class Main {
     @CEntryPoint(name = "transformSimple")
     public static CCharPointer transform(IsolateThread thread, CCharPointer xml, CCharPointer xslt) {
         try {
-            String result = transform(CTypeConversion.toJavaString(xml), CTypeConversion.toJavaString(xslt));
+            String result = transform(CTypeConversion.toJavaString(xml), CTypeConversion.toJavaString(xslt), null);
             final CTypeConversion.CCharPointerHolder holder=CTypeConversion.toCString(result);
             return holder.get();
         }
@@ -47,7 +48,11 @@ class Main {
 
             System.out.println(">>> " + addressBook.getPeople(0).getName());
 
-            String result = transform(CTypeConversion.toJavaString(xml), CTypeConversion.toJavaString(xslt));
+            var httpRequest = (new HttpRequest());
+            httpRequest.getHeader().put("Content-Type", "text/xml");
+
+            String result = transform(CTypeConversion.toJavaString(xml), CTypeConversion.toJavaString(xslt), httpRequest);
+
             final CTypeConversion.CCharPointerHolder holder=CTypeConversion.toCString(result);
             return holder.get();
         }
@@ -57,14 +62,27 @@ class Main {
         }
     }
 
-    private static String transform(String xml, String xslt) throws SaxonApiException {
+
+
+    private static String transform(String xml, String xslt, HttpRequest httpRequest) throws SaxonApiException {
+
+        // TODO: For complex transforms, we need to make a new Processor per request
+        // For simple transforms, we can shared a common Processor.
+
+
         Processor processor = new Processor(false);
+
+        processor.registerExtensionFunction(new ShiftLeft(httpRequest));
         XsltCompiler compiler = processor.newXsltCompiler();
         XsltExecutable stylesheet = compiler.compile(new StreamSource(new StringReader(xslt)));
+
+        // TODO: Can we cache the Stylesheet?
+        Xslt30Transformer transformer = stylesheet.load30();
+
         var stringWriter = new StringWriter();
         Serializer out = processor.newSerializer(stringWriter);
-        Xslt30Transformer transformer = stylesheet.load30();
         transformer.transform(new StreamSource(new StringReader(xml)), out);
+
         return stringWriter.toString();
     }
 }
