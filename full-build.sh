@@ -23,9 +23,7 @@ cp ./saxon-lib/target/libsaxon-native-image-source-jar/libsaxon-native* transfor
 cd transform-app
 
 # Compile and Link
-protoc -I=proto --java_out=saxon-lib/src/main/java proto/addressbook.proto
-protoc -I=proto --cpp_out=transform-app proto/addressbook.proto
-g++ transform.cc addressbook.pb.cc -L . -I . -lsaxon-native -lprotobuf -o transform
+g++ transform.cc -L . -I . -lsaxon-native -lprotobuf -o transform
 
 # Run Example
 
