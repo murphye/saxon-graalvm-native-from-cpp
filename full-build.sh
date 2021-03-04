@@ -23,7 +23,7 @@ cp ./saxon-lib/target/libsaxon-native-image-source-jar/libsaxon-native* transfor
 cd transform-app
 
 # Compile and Link
-g++ transform.cc -L . -I . -lsaxon-native -lprotobuf -o transform
+g++ transform.cc -L . -I . -lsaxon-native -o transform
 
 # Run Example
 
